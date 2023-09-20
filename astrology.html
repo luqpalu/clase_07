@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="style.css" />
+        <title>DNOO37</title>
+    </head>
+    <body>
+        <nav>
+            <h1><a href="index.html">Paula Luque</a></h1>
+            <select onchange="location = this.value;">
+                <option value="index.html">INDEX</option>
+                <option value="astrology.html" selected>ASTROLOGY</option>
+                <option value="astronomy.html">ASTRONOMY</option>
+                <option value="earthquakes.html">EARTHQUAKES</option>
+                <option value="weather.html">WEATHER</option>
+            </select>
+        </nav>
+        <header style="display: none;">
+            <div>Marque uno:</div>
+            <div><input type="radio" name="selecciona" value="todos" checked />Todos</div>
+            <div><input type="radio" name="selecciona" value="agua" />Agua</div>
+            <div><input type="radio" name="selecciona" value="aire" />Aire</div>
+            <div><input type="radio" name="selecciona" value="fuego" />Fuego</div>
+            <div><input type="radio" name="selecciona" value="tierra" />Tierra</div>
+        </header>
+        <aside></aside>
+        <main></main>
+        <script>
+            const alternativas = document.querySelector("header");
+            const detalles = document.querySelector("aside");
+            const respuesta = document.querySelector("main");
+            var datos;
+            async function estudiantes() {
+                const data = await fetch("https://raw.githubusercontent.com/profesorfaco/dno037-2023-2/main/clase-07/_curso.json");
+                datos = await data.json();
+                alternativas.removeAttribute("style");
+                datos.forEach((x) => {
+                    if(x.github !== ""){
+                        respuesta.innerHTML += `<article><div><img src="${x.avatar}"></div><div><p><a href="integrante.html?lista=${x.lista}">${x.nombres.split(" ")[0]} ${x.apellidos.split(" ")[0]}</a></p><p>${
+                            x.zodiaco.signo
+                        }</p></div></article>`;
+                    }
+                });
+            }
+            estudiantes().catch((error) => console.error(error));
+
+            function compatibilidad(valor) {
+                respuesta.innerHTML = ``;
+                detalles.innerHTML = ``;
+
+                //Lo que sigue lo saqué de https://www.clara.es/
+
+                if (valor == "fuego") {
+                    about =
+                        "<em>Con signo de fuego (Aries, Leo y Sagitario)</em>: Los signos de fuego, como Aries, Leo y Sagitario, son apasionados y llenos de vitalidad. Aries lidera con valentía, Leo brilla con carisma y Sagitario es aventurero. Suelen llevarse bien con signos de fuego y aire, pero pueden chocar con signos de tierra y agua debido a diferencias en enfoque y emociones. Curiosamente, el fuego se asocia con la creatividad y su planeta regente es Marte, simbolizando la acción.";
+                } else if (valor == "agua") {
+                    about =
+                        "<em>Con signo de agua (Cáncer, Escorpio y Piscis)</em>: Los signos de agua, como Cáncer, Escorpio y Piscis, son emocionales y sensibles. Cáncer es protector, Escorpio es apasionado y Piscis es soñador. Suelen conectarse con signos de agua y tierra, pero pueden tener desafíos con signos de fuego y aire debido a diferencias en emociones y enfoque. Curiosamente, el agua se asocia con la intuición y su planeta regente es Neptuno, que simboliza la espiritualidad y la imaginación.";
+                } else if (valor == "aire") {
+                    about =
+                        "<em>Con signo de aire (Géminis, Libra y Acuario)</em>: Los signos de aire, como Géminis, Libra y Acuario, son intelectuales y comunicativos. Géminis es curioso, Libra es equitativo y Acuario es visionario. Suelen llevarse bien con signos de aire y fuego, pero pueden tener desafíos con signos de tierra y agua debido a diferencias en valores y emociones. Curiosamente, el aire se asocia con la mente y la comunicación, y su planeta regente es Urano, que representa la originalidad y la innovación.";
+                } else if (valor == "tierra"){
+                    about =
+                        "<em>Con signo de tierra (Tauro, Virgo, Capricornio)</em>: Los signos de tierra, como Tauro, Virgo y Capricornio, son prácticos y realistas. Tauro es terco, Virgo es perfeccionista y Capricornio es ambicioso. Suelen llevarse bien con signos de tierra y agua, pero pueden tener desafíos con signos de aire y fuego debido a diferencias en valores y enfoque. Curiosamente, la tierra se asocia con la estabilidad y la materialidad, y su planeta regente es Saturno, que simboliza la disciplina y la responsabilidad.";
+                } else {
+                    about = "Diseño y nuevos medios."
+                }
+
+                detalles.innerHTML += `<div><p>${about}</p></div>`;
+
+                datos.forEach((x) => {
+                    if (valor == x.zodiaco.elemento) {
+                        respuesta.innerHTML += `<article><div><img src="${x.avatar}"></div><div><p><a href="integrante.html?lista=${x.lista}">${x.nombres.split(" ")[0]} ${x.apellidos.split(" ")[0]}</a></p><p>${x.zodiaco.signo}</p></div></article>`;
+                    }
+                });
+            }
+
+            const seleccionado = document.querySelectorAll('input[name="selecciona"]');
+
+            seleccionado.forEach((i) => {
+                i.addEventListener("change", function () {
+                    var valor = this.value;
+                    if (valor !== "todos"){
+                        console.log(valor);
+                        compatibilidad(valor);
+                    } else {
+                        window.location.reload();
+                    }
+                });
+            });
+        </script>
+    </body>
+</html>
