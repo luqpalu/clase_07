@@ -10,12 +10,12 @@
     --mediano:calc(0.81rem + 0.81vw);
     --medianoAjustado:calc(0.81rem + 0.405vw);
     --normal:calc(1rem - 0.162vw);
-    --grisOscuro:rgb(200,200,200);
-    --grisMedio:rgb(225,225,225);
-    --grisClaro:rgb(250,250,250);
-    --foreground:rgba(0,0,0,.6);
+    --grisOscuro:rgb(231,84,128);
+    --grisMedio:#FBAED2;
+    --grisClaro:#FF9999;
+    --foreground:rgba(222,49,99);
     --foregroundLink:rgba(0,0,0,.8);
-    --foregroundHover:rgba(0,0,0,1);
+    --foregroundHover:rgba(222,49,99);
 }
 
 html,
@@ -25,10 +25,10 @@ body {
 
 body {
     font-weight: 400;
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: monospace;, sans-serif;
     font-size:var(--normal);
     color: var(--foreground);
-    background: linear-gradient(var(--grisMedio), var(--grisClaro));
+    background: lightblue
     overflow-x: hidden;
 }
 
